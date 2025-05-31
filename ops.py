@@ -1,13 +1,38 @@
 import math
 
-def vector_norm(vector):
-    sum_of_squares = 0
-    for component in vector:
-        sum_of_squares += component ** 2
-    norm = math.sqrt(sum_of_squares)
-    return norm
+def multiplicar_por_vetor(matriz, vetor):
+    if len(matriz[0]) != len(vetor):
+        raise ValueError("A quantidade de colunas da matriz deve ser igual ao tamanho do vetor")
 
-def mul(A, B):
+    resultado = []
+    for linha in matriz:
+        produto_escalar = sum(m * v for m, v in zip(linha, vetor))
+        resultado.append(produto_escalar)
+    return resultado
+
+def multiplicar_por_escalar(vetor, escalar):
+    return [componente * escalar for componente in vetor]
+
+def dividir_por_escalar(vetor, escalar):
+    if escalar == 0:
+        raise ValueError("Não é possível dividir por zero.")
+    return [round(componente / escalar, 5) for componente in vetor]
+
+def transposta(matriz):
+    if not matriz:
+        return []
+
+    return [[linha[i] for linha in matriz] for i in range(len(matriz[0]))]
+
+def norma(vetor):
+    soma_dos_quadrados = 0
+    for componente in vetor:
+        soma_dos_quadrados += componente ** 2
+    norma = math.sqrt(soma_dos_quadrados)
+    return norma
+
+
+def mult(A, B):
     result = []
     for i in range(len(A)):
         row = []
@@ -19,7 +44,7 @@ def mul(A, B):
         result.append(row)
     return result
 
-def sum_rows(matrix):
+def soma(matrix):
     row_sums = []
     for row in matrix:
         row_sum = 0
@@ -28,7 +53,16 @@ def sum_rows(matrix):
         row_sums.append(row_sum)
     return row_sums
 
-def sum_columns(matrix):
+def vetor_centro(matrix):
+    row_sums = []
+    for row in matrix:
+        row_sum = 0
+        for value in row:
+            row_sum += value
+        row_sums.append(row_sum)
+    return row_sums
+
+def vetor_autoridade(matrix):
     if not matrix or not matrix[0]:
         return []
 
